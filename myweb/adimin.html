@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Upload & Manage Images</title>
+
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 30px;
+}
+
+#preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.img-container {
+  position: relative;
+  display: inline-block;
+}
+
+.img-container img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <button><a href="index.html">home</a></button>
+    <button><a href="about us.html">about us</a></button>
+    <button><a href="contact us.html">contact us</a></button>
+    <button><a href="images.html">see photos</a></button>
+  </div>
+</header>
+
+<h4>username: admin<br>password: 0000</h4>
+
+<h2>Upload & Manage Images</h2>
+
+<input
+  type="hidden"
+  role="uploadcare-uploader"
+  data-public-key="e7737865242509d596c2"
+  data-images-only="true"
+  data-multiple="true"
+/>
+
+<div id="preview"></div>
+
+<script>
+const input = document.querySelector('[role=uploadcare-uploader]');
+const widget = uploadcare.Widget(input);
+const preview = document.getElementById('preview');
+
+let saved = JSON.parse(localStorage.getItem('uploadedImages')) || [];
+
+/* Load saved images */
+saved.forEach(url => renderImage(url));
+
+/* Upload complete */
+widget.onUploadComplete(function(info) {
+  if (info.files) {
+    info.files.forEach(filePromise => {
+      filePromise.done(fileInfo => {
+        saveImage(fileInfo.cdnUrl);
+      });
+    });
+  } else {
+    saveImage(info.cdnUrl);
+  }
+});
+
+/* Save correct preview URL */
+function saveImage(url) {
+  const fixedUrl = url + "-/preview/600x600/";
+
+  if (!saved.includes(fixedUrl)) {
+    saved.push(fixedUrl);
+    localStorage.setItem("uploadedImages", JSON.stringify(saved));
+    renderImage(fixedUrl);
+  }
+}
+
+/* Render image */
+function renderImage(url) {
+  const container = document.createElement("div");
+  container.className = "img-container";
+
+  const img = document.createElement("img");
+  img.src = url;
+  img.alt = "Uploaded Image";
+
+  img.onerror = function () {
+    this.src = "https://via.placeholder.com/150?text=Image+Error";
+  };
+
+  const btn = document.createElement("button");
+  btn.className = "delete-btn";
+  btn.innerHTML = "×";
+
+  btn.onclick = function () {
+    saved = saved.filter(item => item !== url);
+    localStorage.setItem("uploadedImages", JSON.stringify(saved));
+    container.remove();
+  };
+
+  container.appendChild(img);
+  container.appendChild(btn);
+  preview.appendChild(container);
+}
+</script>
+
+</body>
+</html>

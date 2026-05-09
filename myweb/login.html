@@ -1,0 +1,135 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Login</title>  
+  <style>  
+    body {  
+      font-family: Arial, sans-serif;  
+      padding: 20px;  
+      margin: 0;  
+      background-color: #f5f5f5;
+    }  
+  
+    form {  
+      border-radius: 6px;  
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);  
+      padding: 20px;  
+      max-width: 300px;  
+      margin: 50px auto;  
+      background-color: white;
+    }  
+  
+    input[type="text"],  
+    input[type="password"] {  
+      display: block;  
+      width: 100%;  
+      padding: 10px;  
+      margin: 10px 0;  
+      box-sizing: border-box;  
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }  
+  
+    input[type="submit"],  
+    button {  
+      background-color: #007bff;  
+      color: white;  
+      border: none;  
+      padding: 10px 15px;  
+      border-radius: 4px;  
+      width: 100%;  
+      cursor: pointer;  
+      margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .success { color: green; }  
+    .error { color: red; }  
+  
+    header {  
+      margin-bottom: 20px;  
+      text-align: center;
+      flex-wrap: wrap;
+    }  
+  
+    header a {  
+      text-decoration: none;  
+      padding: 10px 15px;  
+      background-color: #007bff;  
+      color: white;  
+      border-radius: 4px;  
+      margin: 5px;  
+      display: inline-block;
+    }  
+
+    header a:hover {
+      background-color: #0056b3;
+    }
+
+    /* ✅ Responsive adjustments */
+    @media (max-width: 400px) {
+      body {
+        padding: 10px;
+      }
+
+      form {
+        margin: 20px auto;
+        padding: 15px;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      header a {
+        display: block;
+        width: 100%;
+        margin: 5px 0;
+      }
+    }
+  </style>  
+</head>  
+<body>  
+  
+  <header>  
+    <a href="index.html">Home</a>  
+    <a href="about us.html">About Us</a>  
+    <a href="contact us.html">Contact Us</a>  
+    <a href="images.html">See Photos</a>  
+  </header>  
+  
+  <h2 style="text-align: center;">Login</h2>  
+  <form id="loginForm">  
+    <input type="text" id="username" placeholder="Username" required>  
+    <input type="password" id="password" placeholder="Password" required>  
+    <input type="submit" value="Login">  
+  </form>  
+  
+  <p id="message" style="text-align: center;"></p>  
+  
+  <script>  
+    document.getElementById('loginForm').addEventListener('submit', function (e) {  
+      e.preventDefault();  
+  
+      const username = document.getElementById('username').value.trim();  
+      const password = document.getElementById('password').value.trim();  
+      const message = document.getElementById('message');  
+  
+      const validUsername = 'admin';  
+      const validPassword = '0000';  
+  
+      if (username === validUsername && password === validPassword) {  
+        localStorage.setItem('isLoggedIn', 'true');  
+        window.location.href = 'adimin.html'; // ✅ Fixed typo
+      } else {  
+        message.textContent = '❌ Invalid credentials';  
+        message.className = 'error';  
+      }  
+    });  
+  </script>  
+  
+</body>  
+</html>

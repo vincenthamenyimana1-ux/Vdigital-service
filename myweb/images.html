@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Gallery | Vincent Digital Service</title>
+
+<meta
+  name="description"
+  content="Professional photo gallery by Vincent Digital Service."
+>
+
+<!-- Bootstrap Icons -->
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+/>
+
+<style>
+
+/* ===== GLOBAL ===== */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:"Segoe UI", Arial, sans-serif;
+  background:black;
+  color:white;
+  overflow-x:hidden;
+}
+
+a{
+  text-decoration:none;
+}
+
+/* ===== BACKGROUND VIDEO ===== */
+
+.background-video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-3;
+}
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.80);
+  z-index:-2;
+}
+
+/* ===== HEADER ===== */
+
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:1000;
+  background:rgba(0,15,35,0.92);
+  backdrop-filter:blur(10px);
+  padding:15px 20px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.4);
+}
+
+.nav{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+
+.nav a{
+  color:white;
+  background:linear-gradient(45deg,#003366,#00aaff);
+  padding:12px 24px;
+  border-radius:50px;
+  font-weight:bold;
+  transition:0.4s;
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.nav a:hover{
+  transform:translateY(-4px);
+  background:linear-gradient(45deg,#00cfff,#003366);
+}
+
+/* ===== HERO ===== */
+
+.hero{
+  min-height:60vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:140px 20px 80px;
+}
+
+.hero-content{
+  max-width:900px;
+  animation:fadeUp 1s ease;
+}
+
+.hero h1{
+  font-size:4rem;
+  color:#00cfff;
+  margin-bottom:25px;
+  text-shadow:0 8px 25px rgba(0,0,0,0.5);
+}
+
+.hero p{
+  font-size:1.2rem;
+  color:white;
+  line-height:1.9;
+}
+
+/* ===== MAIN ===== */
+
+main{
+  max-width:1300px;
+  margin:auto;
+  padding:20px;
+}
+
+.section-title{
+  text-align:center;
+  color:#00cfff;
+  font-size:2.7rem;
+  margin-bottom:50px;
+}
+
+/* ===== GALLERY ===== */
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:35px;
+}
+
+/* ===== CARD ===== */
+
+.gallery-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:28px;
+  min-height:420px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.12);
+  transition:0.5s;
+  box-shadow:0 10px 35px rgba(0,0,0,0.4);
+}
+
+.gallery-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 20px 40px rgba(0,191,255,0.35);
+}
+
+/* ===== IMAGE ===== */
+
+.gallery-card img{
+  width:100%;
+  height:260px;
+  object-fit:cover;
+  transition:0.5s;
+}
+
+.gallery-card:hover img{
+  transform:scale(1.06);
+}
+
+/* ===== CONTENT ===== */
+
+.gallery-content{
+  padding:28px 24px;
+}
+
+.gallery-content h3{
+  color:#00cfff;
+  font-size:1.5rem;
+  margin-bottom:15px;
+}
+
+.gallery-content p{
+  color:white;
+  line-height:1.8;
+  margin-bottom:20px;
+}
+
+/* ===== BUTTON ===== */
+
+.download-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(45deg,#003366,#00aaff);
+  color:white;
+  padding:12px 24px;
+  border-radius:50px;
+  font-weight:bold;
+  transition:0.4s;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.download-btn:hover{
+  transform:translateY(-4px);
+  background:linear-gradient(45deg,#00cfff,#003366);
+}
+
+/* ===== EMPTY MESSAGE ===== */
+
+.empty-box{
+  margin-top:80px;
+  text-align:center;
+  padding:40px 25px;
+  border-radius:25px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+.empty-box i{
+  font-size:4rem;
+  color:#00cfff;
+  margin-bottom:20px;
+}
+
+.empty-box h2{
+  color:#00cfff;
+  margin-bottom:18px;
+  font-size:2rem;
+}
+
+.empty-box p{
+  color:white;
+  line-height:1.9;
+  font-size:1.1rem;
+}
+
+/* ===== FOOTER ===== */
+
+footer{
+  margin-top:70px;
+  background:rgba(0,15,35,0.92);
+  text-align:center;
+  padding:28px 20px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+}
+
+footer p{
+  color:#00cfff;
+  font-size:1.1rem;
+  font-weight:bold;
+}
+
+/* ===== ANIMATION ===== */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(40px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:768px){
+
+  .hero h1{
+    font-size:2.8rem;
+  }
+
+  .hero p{
+    font-size:1.05rem;
+  }
+
+  .section-title{
+    font-size:2rem;
+  }
+
+  .gallery-card{
+    min-height:auto;
+  }
+
+  .nav a{
+    padding:10px 18px;
+    font-size:0.92rem;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ===== BACKGROUND VIDEO ===== -->
+
+<video autoplay muted loop playsinline class="background-video">
+  <source src="Pexels1.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- ===== HEADER ===== -->
+
+<header>
+
+  <nav class="nav">
+
+    <a href="index.html">
+      <i class="bi bi-house-door-fill"></i>
+      Home
+    </a>
+
+    <a href="about us.html">
+      <i class="bi bi-person-fill"></i>
+      About Us
+    </a>
+
+    <a href="contact us.html">
+      <i class="bi bi-envelope-fill"></i>
+      Contact Us
+    </a>
+
+    <a href="images.html">
+      <i class="bi bi-images"></i>
+      Gallery
+    </a>
+
+  </nav>
+
+</header>
+
+<!-- ===== HERO ===== -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h1>
+      <i class="bi bi-image-fill"></i>
+      Our Photo Gallery
+    </h1>
+
+    <p>
+      Explore professional designs, digital projects,
+      branding samples, presentations, and creative work
+      by Vincent Digital Service.
+    </p>
+
+  </div>
+
+</section>
+
+<!-- ===== MAIN ===== -->
+
+<main>
+
+  <h2 class="section-title">
+    <i class="bi bi-grid-fill"></i>
+    Featured Gallery
+  </h2>
+
+  <!-- ===== GALLERY ===== -->
+
+  <div class="gallery">
+
+    <!-- IMAGE 1 -->
+
+    <div class="gallery-card">
+
+      <img src="abageni.jpg" alt="Wedding Design">
+
+      <div class="gallery-content">
+
+        <h3>
+          <i class="bi bi-camera-fill"></i>
+          Wedding Design
+        </h3>
+
+        <p>
+          Professional wedding photo editing and beautiful event designs.
+        </p>
+
+        <a href="abageni.jpg" download class="download-btn">
+
+          <i class="bi bi-download"></i>
+          Download
+
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- IMAGE 2 -->
+
+    <div class="gallery-card">
+
+      <img src="coding.jpg" alt="Website Design">
+
+      <div class="gallery-content">
+
+        <h3>
+          <i class="bi bi-code-slash"></i>
+          Website Development
+        </h3>
+
+        <p>
+          Responsive and modern website design for businesses and brands.
+        </p>
+
+        <a href="coding.jpg" download class="download-btn">
+
+          <i class="bi bi-download"></i>
+          Download
+
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- IMAGE 3 -->
+
+    <div class="gallery-card">
+
+      <img src="coding1.jpg" alt="Digital Branding">
+
+      <div class="gallery-content">
+
+        <h3>
+          <i class="bi bi-laptop-fill"></i>
+          Digital Branding
+        </h3>
+
+        <p>
+          Creative digital branding and professional online presentation.
+        </p>
+
+        <a href="coding1.jpg" download class="download-btn">
+
+          <i class="bi bi-download"></i>
+          Download
+
+        </a>
+
+      </div>
+
+    </div>
+
+    <!-- IMAGE 4 -->
+
+    <div class="gallery-card">
+
+      <img src="lyrics.png" alt="Lyrics Production">
+
+      <div class="gallery-content">
+
+        <h3>
+          <i class="bi bi-music-note-beamed"></i>
+          Lyrics Production
+        </h3>
+
+        <p>
+          Creative lyrics production and entertainment content services.
+        </p>
+
+        <a href="lyrics.png" download class="download-btn">
+
+          <i class="bi bi-download"></i>
+          Download
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ===== EMPTY MESSAGE ===== -->
+
+  <div class="empty-box">
+
+    <i class="bi bi-cloud-slash-fill"></i>
+
+    <h2>No Additional Images Uploaded Yet</h2>
+
+    <p>
+      Sorry, no extra images have been uploaded yet.<br>
+      Mwihangane, nta mafoto twari twashyiraho kugeza ubu.
+    </p>
+
+  </div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+
+<footer>
+
+  <p>
+    <i class="bi bi-stars"></i>
+    Vincent Digital Service — Professional Creative Gallery
+  </p>
+
+</footer>
+
+</body>
+</html>
